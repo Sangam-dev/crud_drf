@@ -1,24 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddItem from "./AddItem";
 import GroceryList from "./GroceryList";
 
 export default function GroceryApp() {
-
-  const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem("groceryList");
-    if (!saved) return [];
-    try {
-      return JSON.parse(saved);
-    } catch (error) {
-      console.error("Failed to parse groceryList from localStorage:", error);
-      localStorage.removeItem("groceryList");
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem("groceryList", JSON.stringify(items));
-  }, [items]);
+  const [items, setItems] = useState([]);
 
   return (
     <div className="container">
