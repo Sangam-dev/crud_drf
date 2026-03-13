@@ -1,0 +1,48 @@
+name: Build and Deploy Artifacts
+
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project (Vite)
+        run: npm run build
+
+      - name: Deploy to build-artifacts branch
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Create orphan branch if it doesn't exist
+          git checkout --orphan build-artifacts || git checkout build-artifacts
+
+          # Remove everything from branch
+          git rm -rf . || true
+
+          # Copy build files
+          cp -r dist/* .
+
+          # Add and commit build files
+          git add .
+          git commit -m "Deploy build artifacts"
+
+          # Force push to ensure branch contains only build files
+          git push origin build-artifacts --force
