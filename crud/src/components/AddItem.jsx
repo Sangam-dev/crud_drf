@@ -11,8 +11,8 @@ export default function AddItem({ setItems }) {
 
     const newItem = {
       id: Date.now(),
-      text: input.trim(),
-      checked: false,
+      title: input.trim(),
+      completed: false,
     };
 
     setItems((prev) => [...prev, newItem]);

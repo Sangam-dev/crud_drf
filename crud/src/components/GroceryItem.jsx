@@ -2,7 +2,7 @@ export default function GroceryItem({ item, setItems }) {
   const toggleCheck = () => {
     setItems((prev) =>
       prev.map((i) =>
-        i.id === item.id ? { ...i, checked: !i.checked } : i
+        i.id === item.id ? { ...i, completed: !i.completed } : i
       )
     );
   };
@@ -12,13 +12,13 @@ export default function GroceryItem({ item, setItems }) {
   };
 
   const editItem = () => {
-    const newText = prompt("Edit item:", item.text);
-    if (newText !== null) {
-      const trimmed = newText.trim();
+    const newTitle = prompt("Edit item:", item.title);
+    if (newTitle !== null) {
+      const trimmed = newTitle.trim();
       if (trimmed !== "") {
         setItems((prev) =>
           prev.map((i) =>
-            i.id === item.id ? { ...i, text: trimmed } : i
+            i.id === item.id ? { ...i, title: trimmed } : i
           )
         );
       } else {
@@ -29,10 +29,10 @@ export default function GroceryItem({ item, setItems }) {
 
   return (
     <li
-      className={item.checked ? "checked" : ""}
+      className={item.completed ? "checked" : ""}
       onClick={toggleCheck}
     >
-      <span className="item-text">{item.text}</span>
+      <span className="item-text">{item.title}</span>
 
       <span
         className="edit"
