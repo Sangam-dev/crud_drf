@@ -7,7 +7,8 @@ export default function GroceryApp() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
-  const API_URL = "http://localhost:8000/api/items/";
+  const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:8000/api/items/";
 
   const createItem = async (title) => {
     setError("");
