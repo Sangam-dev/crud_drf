@@ -1,14 +1,10 @@
-export default function GroceryItem({ item, setItems }) {
+export default function GroceryItem({ item, onUpdate, onDelete }) {
   const toggleCheck = () => {
-    setItems((prev) =>
-      prev.map((i) =>
-        i.id === item.id ? { ...i, completed: !i.completed } : i
-      )
-    );
+    onUpdate({ ...item, completed: !item.completed });
   };
 
   const removeItem = () => {
-    setItems((prev) => prev.filter((i) => i.id !== item.id));
+    onDelete(item.id);
   };
 
   const editItem = () => {
@@ -16,11 +12,7 @@ export default function GroceryItem({ item, setItems }) {
     if (newTitle !== null) {
       const trimmed = newTitle.trim();
       if (trimmed !== "") {
-        setItems((prev) =>
-          prev.map((i) =>
-            i.id === item.id ? { ...i, title: trimmed } : i
-          )
-        );
+        onUpdate({ ...item, title: trimmed });
       } else {
         alert("Item cannot be empty");
       }

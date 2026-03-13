@@ -1,22 +1,19 @@
 import { useState } from "react";
 
-export default function AddItem({ setItems }) {
+export default function AddItem({ onAdd }) {
   const [input, setInput] = useState("");
 
-  const handleAdd = () => {
-    if (input.trim() === "") {
+  const handleAdd = async () => {
+    const trimmed = input.trim();
+    if (trimmed === "") {
       alert("enter value");
       return;
     }
 
-    const newItem = {
-      id: Date.now(),
-      title: input.trim(),
-      completed: false,
-    };
-
-    setItems((prev) => [...prev, newItem]);
-    setInput("");
+    const success = await onAdd(trimmed);
+    if (success) {
+      setInput("");
+    }
   };
 
   return (

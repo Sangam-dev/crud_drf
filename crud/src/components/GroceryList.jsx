@@ -1,13 +1,14 @@
 import GroceryItem from "./GroceryItem";
 
-export default function GroceryList({ items, setItems }) {
+export default function GroceryList({ items, onUpdate, onDelete }) {
   return (
     <ul>
       {items.map((item) => (
         <GroceryItem
           key={item.id}
           item={item}
-          setItems={setItems}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
         />
       ))}
     </ul>
