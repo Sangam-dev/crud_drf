@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-export default function AddItem({ onAdd }) {
+export default function AddItem({ onAdd, isSaving }) {
   const [input, setInput] = useState("");
 
   const handleAdd = async () => {
+    if (isSaving) return;
     const trimmed = input.trim();
     if (trimmed === "") {
       alert("enter value");
@@ -23,8 +24,11 @@ export default function AddItem({ onAdd }) {
         placeholder="Add item"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        disabled={isSaving}
       />
-      <button onClick={handleAdd}>Add</button>
+      <button onClick={handleAdd} disabled={isSaving}>
+        {isSaving ? "Adding..." : "Add"}
+      </button>
     </div>
   );
 }
